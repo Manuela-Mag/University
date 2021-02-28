@@ -1,0 +1,7 @@
+C:\Users\Admin\Desktop\Git University\Semester 4\Dbms\Lab\Lab1\Lab1\bin\Debug\Lab1.exe.config
+C:\Users\Admin\Desktop\Git University\Semester 4\Dbms\Lab\Lab1\Lab1\bin\Debug\Lab1.exe
+C:\Users\Admin\Desktop\Git University\Semester 4\Dbms\Lab\Lab1\Lab1\bin\Debug\Lab1.pdb
+C:\Users\Admin\Desktop\Git University\Semester 4\Dbms\Lab\Lab1\Lab1\obj\Debug\Lab1.csprojAssemblyReference.cache
+C:\Users\Admin\Desktop\Git University\Semester 4\Dbms\Lab\Lab1\Lab1\obj\Debug\Lab1.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\Git University\Semester 4\Dbms\Lab\Lab1\Lab1\obj\Debug\Lab1.exe
+C:\Users\Admin\Desktop\Git University\Semester 4\Dbms\Lab\Lab1\Lab1\obj\Debug\Lab1.pdb
