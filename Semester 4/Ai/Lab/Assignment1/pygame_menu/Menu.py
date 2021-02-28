@@ -1,103 +1,106 @@
-import pygame, sys
-
-from buttons.ButtonPy import Button
-
-mainClock = pygame.time.Clock()
+import pygame
 from pygame.locals import *
 
-WHITE = (255,255,255)
-BLACK = (  0,  0,  0)
+from vsimple import GameStart
 
-RED   = (255,  0,  0)
-GREEN = (  0,255,  0)
-BLUE  = (  0,  0,255)
+pygame.init()
 
-YELLOW = (255,255, 0)
+screen_width = 600
+screen_height = 600
 
-class Menu:
-    def __init__(self, screen, font):
-        self.click = False
-        self.screen = screen
-        self.font = font
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption('Welcome')
 
-    '''
-    function that writes the message for the player
-    :param: text - string, font - object of class Font, color, screen, x & y coordinates
-    :return: a new surface
-    '''
-    def draw_text(self,text, font, color, surface, x, y):
-        textobj = font.render(text, 1, color)
-        textrect = textobj.get_rect()
-        textrect.topleft = (x, y)
-        surface.blit(textobj, textrect)
+font = pygame.font.SysFont('Constantia', 30)
 
-    def text_objects(self, text, font):
-        textSurface = font.render(text, True, (255, 255, 255))
-        return textSurface, textSurface.get_rect()
+# define colours
+bg = (235,245,255)
+blue_green = (0, 255, 170)
+black = (0, 0, 0)
+white = (255, 255, 255)
 
-    def main_menu(self):
-        while True:
+# define global variable
+clicked = False
+counter = 0
 
-            self.screen.fill((192, 192, 192))
-            self.draw_text('Welcome, Player! Enjoy your game!', self.font, (255, 255, 255), self.screen, 80, 50)
 
-            mx, my = pygame.mouse.get_pos()
+class button():
+    # colours for button and text
+    button_col = blue_green
+    hover_col = (75, 225, 255)
+    click_col = (50, 150, 255)
+    text_col = black
+    width = 180
+    height = 70
 
-            play = Button(75, 200, 'Play Again?', self.screen, self.font)
-            quit = Button(325, 200, 'Quit?', self.screen, self.font)
-            pause = Button(75, 350, 'Down', self.screen, self.font)
+    def __init__(self, x, y, text):
+        self.x = x
+        self.y = y
+        self.text = text
+
+    def draw_button(self):
+
+        global clicked
+        action = False
+
+        # get mouse position
+        pos = pygame.mouse.get_pos()
+
+        # create pygame Rect object for the button
+        button_rect = Rect(self.x, self.y, self.width, self.height)
+
+        # check mouseover and clicked conditions
+        if button_rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] == 1:
+                clicked = True
+                pygame.draw.rect(screen, self.click_col, button_rect)
+            elif pygame.mouse.get_pressed()[0] == 0 and clicked == True:
+                clicked = False
+                action = True
+            else:
+                pygame.draw.rect(screen, self.hover_col, button_rect)
+        else:
+            pygame.draw.rect(screen, self.button_col, button_rect)
+
+        # add shading to button
+        pygame.draw.line(screen, white, (self.x, self.y), (self.x + self.width, self.y), 2)
+        pygame.draw.line(screen, white, (self.x, self.y), (self.x, self.y + self.height), 2)
+        pygame.draw.line(screen, black, (self.x, self.y + self.height), (self.x + self.width, self.y + self.height), 2)
+        pygame.draw.line(screen, black, (self.x + self.width, self.y), (self.x + self.width, self.y + self.height), 2)
+
+        # add text to button
+        text_img = font.render(self.text, True, self.text_col)
+        text_len = text_img.get_width()
+        screen.blit(text_img, (self.x + int(self.width / 2) - int(text_len / 2), self.y + 25))
+        return action
+
+play = button(220, 150, 'Play')
+options = button(220, 250, 'Options')
+quit = button(220, 350, 'Quit')
+
+
+class Menu(object):
+    def run(self):
+        run = True
+        while run:
+
+            screen.fill(bg)
 
             if play.draw_button():
-                print('Again')
-                counter = 0
+                print('Play')
+                game = GameStart()
+                game.main()
+            if options.draw_button():
+                print('Options')
             if quit.draw_button():
                 print('Quit')
-            if pause.draw_button():
-                print('Down')
-                counter -= 1
-
-            counter_img = self.font.render(str(counter), True, RED)
-            self.screen.blit(counter_img, (280, 450))
+                pygame.quit()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
 
             pygame.display.update()
-            mainClock.tick(60)
 
+        pygame.quit()
 
-    def game(self):
-        running = True
-        while running:
-            self.screen.fill((0, 0, 0))
-
-            self.draw_text('game', self.font, (255, 255, 255), self.screen, 20, 20)
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        running = False
-
-            pygame.display.update()
-            mainClock.tick(60)
-
-
-    def options(self):
-        running = True
-        while running:
-            self.screen.fill((0, 0, 0))
-
-            self.draw_text('options', self.font, (255, 255, 255), self.screen, 20, 20)
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        running = False
-
-            pygame.display.update()
-            mainClock.tick(60)
