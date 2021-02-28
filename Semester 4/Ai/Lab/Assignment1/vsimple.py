@@ -188,9 +188,7 @@ class Drone():
         stack = []
         stack.append([self.x, self.y])
         while len(stack) != 0:
-            '''
-            print("Step")
-            '''
+
 
             time.sleep(0.02)
             row, col = stack.pop()
@@ -201,12 +199,7 @@ class Drone():
 
             visited.append([row, col])
             walls = e.readUDMSensors(row, col)
-            '''
-            print(str(row) + " " + str(col))
-            print(walls)
-            print(stack)
-            print(len(visited))
-            '''
+            
             for i in range(0, walls[0]):
                 if not [row - i - 1, col] in visited and not [row - i - 1, col] in stack and \
                         detectedMap.surface[row - i - 1][col] == 0:
