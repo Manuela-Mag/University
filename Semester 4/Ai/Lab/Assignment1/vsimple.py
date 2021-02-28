@@ -1,6 +1,7 @@
 # import the pygame module, so you can use it
 import pickle, pygame, sys
 import time
+import os
 
 from pygame.locals import *
 from random import random, randint
@@ -75,6 +76,7 @@ class Environment:
             f.close()
 
     def loadEnvironment(self, numfile):
+        print(os.path.isfile(numfile))
         with open(numfile, "rb") as f:
             dummy = pickle.load(f)
             self.__n = dummy.__n
@@ -106,7 +108,7 @@ class DMap:
 
     def markDetectedWalls(self, e, x, y):
         #   To DO
-        # mark on this map the wals that you detect
+        # mark on this map the walls that you detect
         wals = e.readUDMSensors(x, y)
         i = x - 1
         if wals[UP] > 0:
@@ -158,7 +160,7 @@ class DMap:
                 elif (self.surface[i][j] == 0):
                     imagine.blit(empty, (j * 20, i * 20))
 
-        drona = pygame.image.load("drona.png")
+        drona = pygame.image.load(r"C:\\Users\\Admin\\Desktop\\Uni\\University\\Semester 4\\Ai\\Lab\\Assignment1\\drona.png")
         imagine.blit(drona, (y * 20, x * 20))
         return imagine
 
@@ -190,7 +192,7 @@ class Drone():
         while len(stack) != 0:
 
 
-            time.sleep(0.02)
+            time.sleep(0.5)
             row, col = stack.pop()
 
             detectedMap.markDetectedWalls(e, row, col)
@@ -199,7 +201,7 @@ class Drone():
 
             visited.append([row, col])
             walls = e.readUDMSensors(row, col)
-            
+
             for i in range(0, walls[0]):
                 if not [row - i - 1, col] in visited and not [row - i - 1, col] in stack and \
                         detectedMap.surface[row - i - 1][col] == 0:
@@ -222,11 +224,13 @@ class Drone():
 
 class GameStart:
     # define a main function
-    def main(self):
+    def run(self):
         # we create the environment
+
         e = Environment()
-        e.loadEnvironment("test2.map")
-        # print(str(e))
+
+        e.loadEnvironment(r"C:\\Users\\Admin\\Desktop\\Uni\\University\\Semester 4\\Ai\\Lab\\Assignment1\\test2.map")
+
 
         # we create the map
         m = DMap()
@@ -234,9 +238,9 @@ class GameStart:
         # initialize the pygame module
         pygame.init()
         # load and set the logo
-        logo = pygame.image.load("logo32x32.png")
+        logo = pygame.image.load(r"C:\\Users\\Admin\\Desktop\\Uni\\University\\Semester 4\\Ai\\Lab\\Assignment1\\logo32x32.png")
         pygame.display.set_icon(logo)
-        pygame.display.set_caption("drone exploration")
+        pygame.display.set_caption(r"drone exploration")
 
         # we position the drone somewhere in the area
         x = randint(0, 19)
@@ -273,3 +277,9 @@ class GameStart:
             pygame.display.flip()
 
         pygame.quit()
+
+
+if __name__ == "__main__":
+    game = GameStart()
+    game.run()
+

@@ -89,7 +89,7 @@ class Menu(object):
             if play.draw_button():
                 print('Play')
                 game = GameStart()
-                game.main()
+                game.run()
             if options.draw_button():
                 print('Options')
             if quit.draw_button():
