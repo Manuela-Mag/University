@@ -160,7 +160,8 @@ class DMap:
                 elif (self.surface[i][j] == 0):
                     imagine.blit(empty, (j * 20, i * 20))
 
-        drona = pygame.image.load(r"C:\\Users\\Admin\\Desktop\\Uni\\University\\Semester 4\\Ai\\Lab\\Assignment1\\drona.png")
+        drona = pygame.image.load(
+            r"C:\\Users\\Admin\\Desktop\\Uni\\University\\Semester 4\\Ai\\Lab\\Assignment1\\drona.png")
         imagine.blit(drona, (y * 20, x * 20))
         return imagine
 
@@ -186,13 +187,12 @@ class Drone():
             if pressed_keys[K_RIGHT] and detectedMap.surface[self.x][self.y + 1] == 0:
                 self.y = self.y + 1
 
-    def moveDSF(self, detectedMap, e, screen, visited):
+    def moveDSF(self, detectedMap, e, screen, visited, speed):
         stack = []
         stack.append([self.x, self.y])
         while len(stack) != 0:
 
-
-            time.sleep(0.5)
+            time.sleep(speed)
             row, col = stack.pop()
 
             detectedMap.markDetectedWalls(e, row, col)
@@ -222,7 +222,12 @@ class Drone():
                     col - i - 1] == 0:
                     stack.append([row, col - i - 1])
 
+
 class GameStart:
+    def __init__(self, speed):
+        print(speed)
+        self.speed = float(speed)
+
     # define a main function
     def run(self):
         # we create the environment
@@ -231,14 +236,14 @@ class GameStart:
 
         e.loadEnvironment(r"C:\\Users\\Admin\\Desktop\\Uni\\University\\Semester 4\\Ai\\Lab\\Assignment1\\test2.map")
 
-
         # we create the map
         m = DMap()
 
         # initialize the pygame module
         pygame.init()
         # load and set the logo
-        logo = pygame.image.load(r"C:\\Users\\Admin\\Desktop\\Uni\\University\\Semester 4\\Ai\\Lab\\Assignment1\\logo32x32.png")
+        logo = pygame.image.load(
+            r"C:\\Users\\Admin\\Desktop\\Uni\\University\\Semester 4\\Ai\\Lab\\Assignment1\\logo32x32.png")
         pygame.display.set_icon(logo)
         pygame.display.set_caption(r"drone exploration")
 
@@ -270,16 +275,11 @@ class GameStart:
                     running = False
                 if event.type == KEYDOWN:
                     # use this function instead of move
-                    d.moveDSF(m, e, screen, visited)
+                    d.moveDSF(m, e, screen, visited, self.speed)
                     # d.move(m)
             m.markDetectedWalls(e, d.x, d.y)
             screen.blit(m.image(d.x, d.y), (400, 0))
             pygame.display.flip()
 
         pygame.quit()
-
-
-if __name__ == "__main__":
-    game = GameStart()
-    game.run()
 

@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 
+from InputBox import InputBox, OptionsInput
 from vsimple import GameStart
 
 pygame.init()
@@ -82,16 +83,19 @@ quit = button(220, 350, 'Quit')
 class Menu(object):
     def run(self):
         run = True
+        speed = 0.2 #default value for the speed of the drone
         while run:
-
             screen.fill(bg)
-
-            if play.draw_button():
-                print('Play')
-                game = GameStart()
-                game.run()
             if options.draw_button():
                 print('Options')
+                option = OptionsInput()
+                print("option.main" + option.getSpeed())
+                speed = option.getSpeed()
+            if play.draw_button():
+                print('Play')
+                print("speed" + str(speed))
+                game = GameStart(speed)
+                game.run()
             if quit.draw_button():
                 print('Quit')
                 pygame.quit()
