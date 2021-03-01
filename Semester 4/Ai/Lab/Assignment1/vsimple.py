@@ -226,7 +226,11 @@ class Drone():
 class GameStart:
     def __init__(self, speed):
         print(speed)
-        self.speed = float(speed)
+
+        if speed != '':
+            self.speed = float(speed)
+        else:
+            self.speed = 0.1
 
     # define a main function
     def run(self):

@@ -76,8 +76,7 @@ class button():
         return action
 
 play = button(220, 150, 'Play')
-options = button(220, 250, 'Options')
-quit = button(220, 350, 'Quit')
+quit = button(220, 250, 'Quit')
 
 
 class Menu(object):
@@ -86,11 +85,6 @@ class Menu(object):
         speed = 0.2 #default value for the speed of the drone
         while run:
             screen.fill(bg)
-            if options.draw_button():
-                print('Options')
-                option = OptionsInput()
-                print("option.main" + option.getSpeed())
-                speed = option.getSpeed()
             if play.draw_button():
                 print('Play')
                 print("speed" + str(speed))

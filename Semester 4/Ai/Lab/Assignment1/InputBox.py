@@ -54,7 +54,7 @@ class InputBox(object):
 
 class OptionsInput:
     def __init__(self):
-        self.speed = ''
+        self.speed = 0.2
 
     def getSpeed(self):
         return self.speed
